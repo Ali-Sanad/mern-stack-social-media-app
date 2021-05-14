@@ -10,7 +10,7 @@ const Navbar = () => {
       </h1>
       <ul>
         <li>
-          <Link to='!#'>Developers</Link>
+          <Link to='!#'>People</Link>
         </li>
         <li>
           <Link to='/register'>Register</Link>
