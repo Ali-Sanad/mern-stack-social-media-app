@@ -13,6 +13,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import setAuthToken from './utils/setAuthToken';
 import {checkUser} from './actions/auth';
 import PrivateRoute from './components/routes/PrivateRoute';
+import CreateProfile from './components/profile-forms/CreateProfile';
 
 //attach the token to every axios request
 if (localStorage.token) {
@@ -36,6 +37,11 @@ const App = () => {
             <Route path='/register' exact component={Register} />
             <Route path='/login' exact component={Login} />
             <PrivateRoute path='/dashboard' exact component={Dashboard} />
+            <PrivateRoute
+              path='/create-profile'
+              exact
+              component={CreateProfile}
+            />
           </Switch>
         </section>
       </Router>
