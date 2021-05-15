@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
@@ -8,8 +9,22 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
+import Dashboard from './components/dashboard/Dashboard';
+import setAuthToken from './utils/setAuthToken';
+import {checkUser} from './actions/auth';
+import PrivateRoute from './components/routes/PrivateRoute';
+
+//attach the token to every axios request
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
+  //
+  useEffect(() => {
+    store.dispatch(checkUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
@@ -20,6 +35,7 @@ const App = () => {
           <Switch>
             <Route path='/register' exact component={Register} />
             <Route path='/login' exact component={Login} />
+            <PrivateRoute path='/dashboard' exact component={Dashboard} />
           </Switch>
         </section>
       </Router>
