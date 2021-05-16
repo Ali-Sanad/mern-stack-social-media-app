@@ -14,6 +14,9 @@ import setAuthToken from './utils/setAuthToken';
 import {checkUser} from './actions/auth';
 import PrivateRoute from './components/routes/PrivateRoute';
 import CreateProfile from './components/profile-forms/CreateProfile';
+import EditProfile from './components/profile-forms/Editprofile';
+import AddExperience from './components/profile-forms/AddExperience';
+import AddEducation from './components/profile-forms/AddEducation';
 
 //attach the token to every axios request
 if (localStorage.token) {
@@ -41,6 +44,17 @@ const App = () => {
               path='/create-profile'
               exact
               component={CreateProfile}
+            />
+            <PrivateRoute path='/edit-profile' exact component={EditProfile} />
+            <PrivateRoute
+              path='/add-experience'
+              exact
+              component={AddExperience}
+            />
+            <PrivateRoute
+              path='/add-education'
+              exact
+              component={AddEducation}
             />
           </Switch>
         </section>

@@ -10,7 +10,13 @@ const Login = ({login, isAuthenticated}) => {
     password: '',
   });
 
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const {email, password} = formData;
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   const onChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -40,9 +46,10 @@ const Login = ({login, isAuthenticated}) => {
             required
           />
         </div>
-        <div className='form-group'>
+        {/* password field and toggle password visibility */}
+        <div className='form-group' style={{position: 'relative'}}>
           <input
-            type='password'
+            type={passwordShown ? 'text' : 'password'}
             placeholder='Password'
             name='password'
             minLength='6'
@@ -50,6 +57,17 @@ const Login = ({login, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
+          <i
+            className={passwordShown ? 'fa fa-eye-slash' : 'fa fa-eye'}
+            aria-hidden='true'
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              cursor: 'pointer',
+            }}
+            onClick={() => togglePasswordVisiblity()}
+          ></i>
         </div>
 
         <input type='submit' className='btn btn-primary' value='Login' />

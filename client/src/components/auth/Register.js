@@ -13,7 +13,13 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     password2: '',
   });
 
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const {name, email, password, password2} = formData;
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(!passwordShown);
+  };
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -31,6 +37,19 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     return <Redirect to='/dashboard' />;
   }
 
+  const eye = (
+    <i
+      className={passwordShown ? 'fa fa-eye-slash' : 'fa fa-eye'}
+      aria-hidden='true'
+      style={{
+        position: 'absolute',
+        top: '10px',
+        right: '10px',
+        cursor: 'pointer',
+      }}
+      onClick={() => togglePasswordVisiblity()}
+    ></i>
+  );
   return (
     <>
       <h1 className='large text-primary'>Sign Up</h1>
@@ -62,9 +81,9 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             Gravatar email
           </small>
         </div>
-        <div className='form-group'>
+        <div className='form-group' style={{position: 'relative'}}>
           <input
-            type='password'
+            type={passwordShown ? 'text' : 'password'}
             placeholder='Password'
             name='password'
             minLength='6'
@@ -72,10 +91,11 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
+          {eye}
         </div>
-        <div className='form-group'>
+        <div className='form-group' style={{position: 'relative'}}>
           <input
-            type='password'
+            type={passwordShown ? 'text' : 'password'}
             placeholder='Confirm Password'
             name='password2'
             minLength='6'
@@ -83,6 +103,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
+          {eye}
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>

@@ -8,6 +8,7 @@ const normalize = require('normalize-url');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 const {json} = require('express');
 
 //@ route         GET api/profile/me
@@ -49,58 +50,47 @@ router.post(
     }
 
     const {
-      company,
       website,
-      location,
-      bio,
-      status,
-      githubusername,
       skills,
       youtube,
-      facebook,
       twitter,
       instagram,
       linkedin,
+      facebook,
+      // spread the rest of the fields we don't need to check
+      ...rest
     } = req.body;
 
-    //build profile object
-    const profileFields = {};
+    // build a profile
+    const profileFields = {
+      user: req.user.id,
+      website:
+        website && website !== '' ? normalize(website, {forceHttps: true}) : '',
+      skills: Array.isArray(skills)
+        ? skills
+        : skills.split(',').map((skill) => ' ' + skill.trim()),
+      ...rest,
+    };
 
-    profileFields.user = req.user.id;
-    if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
-    if (location) profileFields.location = location;
-    if (bio) profileFields.bio = bio;
-    if (status) profileFields.status = status;
-    if (githubusername) profileFields.githubusername = githubusername;
-    if (skills) {
-      profileFields.skills = skills.split(',').map((skill) => skill.trim());
+    // Build socialFields object
+    const socialFields = {youtube, twitter, instagram, linkedin, facebook};
+
+    // normalize social fields to ensure valid url
+    for (const [key, value] of Object.entries(socialFields)) {
+      if (value && value.length > 0)
+        socialFields[key] = normalize(value, {forceHttps: true});
     }
-    // console.log(profileFields.skills);
-    //build social object
-    profileFields.social = {};
-    if (youtube) profileFields.social.youtube = youtube;
-    if (facebook) profileFields.social.facebook = facebook;
-    if (instagram) profileFields.social.instagram = instagram;
-    if (twitter) profileFields.social.twitter = twitter;
-    if (linkedin) profileFields.social.linkedin = linkedin;
+    // add to profileFields
+    profileFields.social = socialFields;
 
     try {
-      let profile = await Profile.findOne({user: req.user.id});
-      if (profile) {
-        //update
-        profile = await Profile.findOneAndUpdate(
-          {user: req.user.id},
-          {$set: profileFields},
-          {new: true, upsert: true}
-        );
+      //upsert creates new doc if no match is found
+      profile = await Profile.findOneAndUpdate(
+        {user: req.user.id},
+        {$set: profileFields},
+        {new: true, upsert: true, setDefaultsOnInsert: true}
+      );
 
-        return res.json(profile);
-      }
-
-      //if profile not found => Create profile
-      profile = new Profile(profileFields);
-      await profile.save();
       res.json(profile);
     } catch (err) {
       console.error(err.message);
@@ -150,7 +140,8 @@ router.get('/user/:user_id', async (req, res) => {
 //@access          private
 router.delete('/', auth, async (req, res) => {
   try {
-    //@todo remove user posts
+    //remove user posts
+    await Post.deleteMany({user: req.user.id});
     //remove profile
     await Profile.findOneAndDelete({user: req.user.id});
     //remove user
@@ -245,15 +236,8 @@ router.put(
       return res.status(400).json({errors: errors.array()});
     }
 
-    const {
-      school,
-      degree,
-      fieldofstudy,
-      from,
-      to,
-      current,
-      description,
-    } = req.body;
+    const {school, degree, fieldofstudy, from, to, current, description} =
+      req.body;
     const newEdu = {
       school,
       degree,
