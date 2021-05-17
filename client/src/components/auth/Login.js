@@ -58,7 +58,7 @@ const Login = ({login, isAuthenticated}) => {
             required
           />
           <i
-            className={passwordShown ? 'fa fa-eye-slash' : 'fa fa-eye'}
+            className={passwordShown ? 'fa fa-eye' : 'fa fa-eye-slash'}
             aria-hidden='true'
             style={{
               position: 'absolute',

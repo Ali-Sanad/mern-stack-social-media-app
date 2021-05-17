@@ -13,12 +13,17 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     password2: '',
   });
 
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown1, setPasswordShown1] = useState(false);
+  const [passwordShown2, setPasswordShown2] = useState(false);
 
   const {name, email, password, password2} = formData;
 
-  const togglePasswordVisiblity = () => {
-    setPasswordShown(!passwordShown);
+  const togglePasswordVisiblity1 = () => {
+    setPasswordShown1(!passwordShown1);
+  };
+
+  const togglePasswordVisiblity2 = () => {
+    setPasswordShown2(!passwordShown2);
   };
 
   const onChange = (e) =>
@@ -37,9 +42,9 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     return <Redirect to='/dashboard' />;
   }
 
-  const eye = (
+  const eye1 = (
     <i
-      className={passwordShown ? 'fa fa-eye-slash' : 'fa fa-eye'}
+      className={passwordShown1 ? 'fa fa-eye' : 'fa fa-eye-slash'}
       aria-hidden='true'
       style={{
         position: 'absolute',
@@ -47,7 +52,21 @@ const Register = ({setAlert, register, isAuthenticated}) => {
         right: '10px',
         cursor: 'pointer',
       }}
-      onClick={() => togglePasswordVisiblity()}
+      onClick={() => togglePasswordVisiblity1()}
+    ></i>
+  );
+
+  const eye2 = (
+    <i
+      className={passwordShown2 ? 'fa fa-eye' : 'fa fa-eye-slash'}
+      aria-hidden='true'
+      style={{
+        position: 'absolute',
+        top: '10px',
+        right: '10px',
+        cursor: 'pointer',
+      }}
+      onClick={() => togglePasswordVisiblity2()}
     ></i>
   );
   return (
@@ -83,7 +102,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
         </div>
         <div className='form-group' style={{position: 'relative'}}>
           <input
-            type={passwordShown ? 'text' : 'password'}
+            type={passwordShown1 ? 'text' : 'password'}
             placeholder='Password'
             name='password'
             minLength='6'
@@ -91,11 +110,11 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
-          {eye}
+          {eye1}
         </div>
         <div className='form-group' style={{position: 'relative'}}>
           <input
-            type={passwordShown ? 'text' : 'password'}
+            type={passwordShown2 ? 'text' : 'password'}
             placeholder='Confirm Password'
             name='password2'
             minLength='6'
@@ -103,7 +122,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
-          {eye}
+          {eye2}
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>

@@ -1,13 +1,18 @@
 import React from 'react';
-import spinner from './spinner.gif';
+import classes from './Spinner.module.css';
 
 const Spinner = () => (
   <>
-    <img
-      src={spinner}
-      style={{width: '200', margin: 'auto', display: 'block'}}
-      alt='Loading ...'
-    />
+    <div className={classes.Spinner} style={{margin: '40vh 44%'}}>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </>
 );
 

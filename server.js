@@ -1,10 +1,14 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 const app = express();
 
 //connect database
 connectDB();
+
+//enable cors for all routes
+app.use(cors());
 
 //Init middleware for bodyparser
 app.use(express.json({extended: false}));

@@ -13,14 +13,13 @@ const Landing = ({isAuthenticated}) => {
         <div className='landing-inner'>
           <h1 className='x-large'>Social Network</h1>
           <p className='lead'>
-            Create a profile/portfolio, share posts and get insights from others
-            .
+            Create portfolio & posts to get insights from others .
           </p>
           <div className='buttons'>
             <Link to='/register' className='btn btn-primary'>
               Sign Up
             </Link>
-            <Link to='/login' className='btn btn-light'>
+            <Link to='/login' className='btn btn-primary'>
               Login
             </Link>
           </div>

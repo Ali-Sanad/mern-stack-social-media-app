@@ -8,6 +8,7 @@ import {
   CLEAR_PROFILE,
   ACCOUNT_DELETED,
   GET_REPOS,
+  NO_REPOS,
 } from './types';
 
 //fetch current user profile
@@ -63,14 +64,14 @@ export const getProfileById = (userId) => async (dispatch) => {
 export const getGitHubRepos = (username) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/profile/github/${username}`);
+
     dispatch({
       type: GET_REPOS,
       payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: PROFILE_ERROR,
-      payload: {msg: err.response.statusText, status: err.response.status},
+      type: NO_REPOS,
     });
   }
 };
@@ -204,7 +205,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm('Are you sure you want to delete your account ?')) {
     try {
-      const res = await axios.delete('/api/profile');
+      await axios.delete('/api/profile');
 
       dispatch({type: CLEAR_PROFILE});
       dispatch({type: ACCOUNT_DELETED});
