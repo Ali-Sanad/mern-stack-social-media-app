@@ -12,6 +12,7 @@ app.use(cors());
 
 //Init middleware for bodyparser
 app.use(express.json({extended: false}));
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 5000;
 

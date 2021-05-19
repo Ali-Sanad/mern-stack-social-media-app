@@ -9,7 +9,6 @@ const normalize = require('normalize-url');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
-const {json} = require('express');
 
 //@ route         GET api/profile/me
 //@descrption      get user's profile

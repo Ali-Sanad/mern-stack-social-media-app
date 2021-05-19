@@ -24,7 +24,15 @@ const CommentItem = ({
     >
       <div className='user-post'>
         <Link to={`/profile/${user}`}>
-          <img className='user-img-post' src={avatar} alt='' />
+          <img
+            className='user-img-post'
+            src={
+              avatar === '' || !avatar
+                ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
+                : `http://localhost:5000/image/user/${avatar}`
+            }
+            alt=''
+          />
           <h4>{name}</h4>
         </Link>
       </div>

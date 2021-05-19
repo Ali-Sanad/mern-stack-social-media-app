@@ -22,7 +22,16 @@ const PostItem = ({
               to={`/profile/${user}`}
               style={{display: 'flex', alignItems: 'center'}}
             >
-              <img className='user-img-post' src={avatar} alt='' />
+              <img
+                className='user-img-post'
+                //  src={avatar} user image
+                src={
+                  avatar === '' || !avatar
+                    ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
+                    : `http://localhost:5000/image/user/${avatar}`
+                }
+                alt=''
+              />
               <h4 style={{display: 'inline-block', margin: '0 1rem'}}>
                 {name}
               </h4>
@@ -30,11 +39,13 @@ const PostItem = ({
           </div>
 
           <p className='my-1'>{text}</p>
-          <img /* @TODO ==>> image for post  */
-            className='post-img'
-            src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg'
-            alt=''
-          />
+          {image !== null && (
+            <img // image for post
+              className='post-img'
+              src={`http://localhost:5000/image/post/${image}`}
+              alt=''
+            />
+          )}
           <p className='post-date date-align my-1'>
             Posted on <Moment format='DD-MM-YYYY  hh:mm:ss'>{date}</Moment>
           </p>

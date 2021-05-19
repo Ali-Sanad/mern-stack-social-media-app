@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {logout} from '../../actions/auth';
-const Navbar = ({logout, auth, isAuthenticated, loading, profile}) => {
+const Navbar = ({logout, auth: {isAuthenticated, loading, user}}) => {
   const authLinks = (
     <ul>
       <li>
@@ -14,9 +14,9 @@ const Navbar = ({logout, auth, isAuthenticated, loading, profile}) => {
         <Link to='/posts'>Posts</Link>
       </li>
 
-      {isAuthenticated && auth.user._id && (
+      {!loading && isAuthenticated && (
         <li>
-          <Link to={`/profile/${auth.user._id}`}>
+          <Link to={`/profile/${user._id}`}>
             <i className='fas fa-user'></i>{' '}
             <span className='hide-sm'>Profile</span>
           </Link>
@@ -70,17 +70,11 @@ const Navbar = ({logout, auth, isAuthenticated, loading, profile}) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  loading: PropTypes.bool.isRequired,
-  profile: PropTypes.object,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    loading: state.auth.loading,
-    profile: state.profile.profile,
     auth: state.auth,
   };
 };

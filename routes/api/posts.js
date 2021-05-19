@@ -6,11 +6,35 @@ const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 
+//multer********************************************************************
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/image/post');
+  },
+  filename: function (req, file, cb) {
+    const fileName = `${new Date().getTime()}_${file.originalname.replace(
+      /\s+/g,
+      '-'
+    )}`;
+    cb(null, fileName);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 50,
+  },
+});
+/////////////////////////////////////////////////////////////////////////
+
 //@ route          POST api/posts
 //@descrption      Create post
 //@access          Private
 router.post(
   '/',
+  upload.single('image'),
   [auth, [check('text', 'Text is required').notEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -20,11 +44,20 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select('-password');
+
+      let postImage = null;
+      if (!req.file) {
+        postImage = null;
+      } else {
+        postImage = req.file.filename;
+      }
+
       const newPost = new Post({
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id,
+        image: postImage,
       });
 
       const post = await newPost.save();

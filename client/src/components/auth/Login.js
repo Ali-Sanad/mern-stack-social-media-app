@@ -30,8 +30,15 @@ const Login = ({login, isAuthenticated}) => {
     return <Redirect to='/posts' />;
   }
   return (
-    <>
-      <h1 className='large text-primary'>Sign In</h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <h4 className='large text-primary'>Sign In</h4>
       <p className='lead'>
         <i className='fas fa-user'></i> Sign Into Your Account
       </p>
@@ -75,7 +82,7 @@ const Login = ({login, isAuthenticated}) => {
       <p className='my-1'>
         Don't have an account? <Link to='/register'>Sign Up</Link>
       </p>
-    </>
+    </div>
   );
 };
 

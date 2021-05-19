@@ -248,7 +248,7 @@ img {
 /* Forms */
 .form .form-group {
   margin: 1.2rem 0;
-  width: 50%;
+  width: 100%;
 }
 
 .form .form-text {
@@ -506,7 +506,7 @@ button {
 
 .post .post-img {
   width: 100%;
-  height: 60%;
+  /* height: 50%; */
   object-fit: contain;
   border-radius: 10px;
 }

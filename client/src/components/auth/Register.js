@@ -70,8 +70,15 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     ></i>
   );
   return (
-    <>
-      <h1 className='large text-primary'>Sign Up</h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <h4 className='large text-primary'>Sign Up</h4>
       <p className='lead'>
         <i className='fas fa-user'></i> Create Your Account
       </p>
@@ -95,10 +102,6 @@ const Register = ({setAlert, register, isAuthenticated}) => {
             onChange={(e) => onChange(e)}
             required
           />
-          <small className='form-text'>
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
         </div>
         <div className='form-group' style={{position: 'relative'}}>
           <input
@@ -129,7 +132,7 @@ const Register = ({setAlert, register, isAuthenticated}) => {
       <p className='my-1'>
         Already have an account? <Link to='/login'>Sign In</Link>
       </p>
-    </>
+    </div>
   );
 };
 

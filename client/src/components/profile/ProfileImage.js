@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {userImageUpload} from '../../actions/auth';
-import {getCurrentProfile} from '../../actions/profile';
 import {connect} from 'react-redux';
 
 const ProfileTop = ({
@@ -11,11 +10,8 @@ const ProfileTop = ({
     location,
     website,
     social: {facebook, twitter, instagram, youtube, linkedin},
-    user: {_id, name, avatar},
+    user: {name, avatar},
   },
-  userImageUpload,
-  getCurrentProfile,
-  auth,
 }) => {
   const [image, setImage] = useState(null);
   const onImageChange = (e) => {
@@ -36,7 +32,7 @@ const ProfileTop = ({
     <>
       <div
         className='profile-top p-2 bg-primary'
-        style={{borderRadius: '10px', height: '70vh', position: 'relative'}}
+        style={{borderRadius: '10px', height: '70vh'}}
       >
         <img
           className='round-img '
@@ -47,36 +43,25 @@ const ProfileTop = ({
           }
           alt=''
           style={{
-            height: '150px',
-            width: '150px',
+            height: '200px',
+            width: '200px',
             objectFit: 'cover',
             cursor: 'pointer',
           }}
-          onClick={() =>
-            auth.isAuthenticated &&
-            auth.user._id === _id &&
-            fileInput.current.click()
-          }
+          onClick={() => fileInput.current.click()}
         />
 
         <input
           type='file'
           name='avatar'
-          accept='image/png, image/jpeg, image/jpg'
+          accept='image/png, image/jpeg'
           onChange={(e) => onImageChange(e)}
           style={{display: 'none'}}
           ref={fileInput}
         />
-
-        {auth.isAuthenticated && auth.user._id === _id && (
-          <button
-            className='btn btn-light'
-            onClick={() => upload()}
-            style={{position: 'absolute', top: '10px', right: '10px'}}
-          >
-            upload <i className='fas fa-upload text-dark'></i>
-          </button>
-        )}
+        <button className='btn btn-dark' onClick={() => upload()}>
+          upload
+        </button>
 
         <h1 className='large'>{name}</h1>
         <p className='lead'>
@@ -131,7 +116,6 @@ ProfileTop.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   userImageUpload: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -140,6 +124,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {userImageUpload, getCurrentProfile})(
-  ProfileTop
-);
+export default connect(mapStateToProps, {userImageUpload})(ProfileTop);

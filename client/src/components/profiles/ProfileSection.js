@@ -13,7 +13,16 @@ const ProfileSection = ({
 }) => {
   return (
     <div className='profile bg-light'>
-      <img src={avatar} alt='' className='round-img' />
+      <img
+        src={
+          avatar === '' || !avatar
+            ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
+            : `http://localhost:5000/image/user/${avatar}`
+        }
+        alt=''
+        className='round-img'
+        style={{width: '100px', height: '100px'}}
+      />
       <div>
         <h2 className='text-primary'>{name}</h2>
         <p>

@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   ACCOUNT_DELETED,
+  USER_IMAGE,
 } from '../actions/types';
 
 const initialState = {
@@ -49,6 +50,12 @@ const reducer = (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         user: null,
+      };
+    case USER_IMAGE:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
       };
     default:
       return state;

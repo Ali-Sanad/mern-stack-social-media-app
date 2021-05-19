@@ -9,6 +9,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_PROFILE,
+  PROFILE_ERROR,
+  USER_IMAGE,
 } from './types';
 
 import setAuthToken from '../utils/setAuthToken';
@@ -85,4 +87,22 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+
+//update user info   //post => api/users/image
+export const userImageUpload = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/users/image`, formData);
+
+    dispatch({
+      type: USER_IMAGE,
+      payload: res.data,
+    });
+    dispatch(setAlert('Image Uploaded', 'success'));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {msg: err.response.statusText, status: err.response.status},
+    });
+  }
 };

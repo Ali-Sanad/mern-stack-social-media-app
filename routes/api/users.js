@@ -7,6 +7,30 @@ const config = require('config');
 const {check, validationResult} = require('express-validator');
 
 const User = require('../../models/User');
+const auth = require('../../middlewares/auth');
+
+//multer********************************************************************
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/image/user');
+  },
+  filename: function (req, file, cb) {
+    const fileName = `${new Date().getTime()}_${file.originalname.replace(
+      /\s+/g,
+      '-'
+    )}`;
+    cb(null, fileName);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 50,
+  },
+});
+/////////////////////////////////////////////////////////////////////////
 
 //@ route          POST   api/users
 //@descrption      Register user
@@ -36,17 +60,17 @@ router.post(
       }
 
       //get user gravatar
-      const avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm',
-      });
+      // const avatar = gravatar.url(email, {
+      //   s: '200',
+      //   r: 'pg',
+      //   d: 'mm',
+      // });
 
       user = new User({
         name,
         email,
         password,
-        avatar,
+        // avatar,
       });
 
       //encrypt password
@@ -76,5 +100,27 @@ router.post(
     }
   }
 );
+
+router.post('/image/', upload.single('avatar'), auth, async (req, res) => {
+  let userImage = null;
+  if (!req.file) {
+    userImage = null;
+  } else {
+    userImage = req.file.filename;
+  }
+
+  try {
+    const user = await User.findOneAndUpdate(
+      {_id: req.user.id},
+      {avatar: userImage},
+      {new: true}
+    );
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = router;
