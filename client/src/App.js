@@ -19,6 +19,8 @@ import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
+import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 
 //attach the token to every axios request
 if (localStorage.token) {
@@ -43,6 +45,8 @@ const App = () => {
             <Route path='/login' exact component={Login} />
             <Route path='/profiles' exact component={Profiles} />
             <Route path='/profile/:id' exact component={Profile} />
+            <Route path='/posts' exact component={Posts} />
+            <Route path='/posts/:id' exact component={Post} />
             <PrivateRoute path='/dashboard' exact component={Dashboard} />
             <PrivateRoute
               path='/create-profile'

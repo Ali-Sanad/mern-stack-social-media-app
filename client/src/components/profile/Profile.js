@@ -25,21 +25,26 @@ const Profile = ({
         <Spinner />
       ) : (
         <>
-          <Link to='/profiles' className='btn btn-light'>
-            Back To People
-          </Link>
-          {auth.isAuthenticated &&
-            auth.loading === false &&
-            auth.user._id === profile.user._id && (
-              <Link to='/edit-profile' className='btn btn-light'>
-                Edit Profile
-              </Link>
-            )}
-          <div className='profile-grid my-1'>
+          <div style={{marginLeft: '12%', marginBottom: '2rem'}}>
+            <Link to='/profiles' className='btn btn-light'>
+              Back To People
+            </Link>
+            {auth.isAuthenticated &&
+              auth.loading === false &&
+              auth.user._id === profile.user._id && (
+                <Link to='/edit-profile' className='btn btn-light'>
+                  Edit Profile
+                </Link>
+              )}
+          </div>
+          <div
+            className='profile-grid my-2'
+            style={{width: '70vw', margin: 'auto'}}
+          >
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
 
-            <div className='profile-exp bg-white p-2'>
+            <div className='profile-exp p-2'>
               <h2 className='text-primary'>Experience</h2>
               {profile.experience.length > 0 ? (
                 <>

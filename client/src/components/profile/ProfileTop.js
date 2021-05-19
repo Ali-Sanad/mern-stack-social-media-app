@@ -14,8 +14,8 @@ const ProfileTop = ({
   return (
     <>
       <div
-        className='profile-top bg-primary p-2'
-        style={{borderRadius: '10px'}}
+        className='profile-top p-2 bg-primary'
+        style={{borderRadius: '10px', height: '70vh'}}
       >
         <img className='round-img my-1' src={avatar} alt='' />
         <h1 className='large'>{name}</h1>

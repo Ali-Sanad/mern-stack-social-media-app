@@ -18,19 +18,21 @@ const Profiles = ({getProfiles, profile: {profiles, loading}}) => {
         </>
       ) : (
         <>
-          <h1 className='large text-primary'>People</h1>
-
-          <p className='lead'>
-            <i className='fas fa-link p-1'></i>Discover and connect with people
-          </p>
-          <div className='profiles'>
+          <div style={{marginLeft: '18%'}}>
+            <h1 className='large text-primary'>People</h1>
+            <p className='lead'>
+              <i className='fas fa-link p-1'></i>Discover and connect with
+              people
+            </p>
+          </div>
+          <div className='profiles' style={{width: '60vw', margin: 'auto'}}>
             {profiles.length > 0 ? (
               profiles.map((profile) => {
                 return <ProfileSection key={profile._id} profile={profile} />;
               })
             ) : (
               <>
-                <h3> No profiles found...</h3>
+                <h3 style={{marginLeft: '13%'}}> No profiles found...</h3>
                 <Spinner />
               </>
             )}

@@ -1,6 +1,8 @@
 /* Global Styles */
 :root {
-  --primary-color: #3d99be;
+  /* --primary-color: #3d99be;   #00acee*/
+  /* --primary-color: #90ee90; */
+  --primary-color: #00acee;
   --dark-color: #191c1f;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
@@ -372,6 +374,7 @@ button {
   line-height: 1.8;
   margin-bottom: 1rem;
   border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Profile Page */
@@ -392,10 +395,11 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .profile-top img {
-  width: 250px;
+  width: 150px;
 }
 
 .profile-top .icons a {
@@ -411,6 +415,7 @@ button {
   grid-area: about;
   text-align: center;
   border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .profile-about .skills {
@@ -423,11 +428,13 @@ button {
 .profile-exp {
   grid-area: exp;
   border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .profile-edu {
   grid-area: edu;
   border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .profile-exp h2,
@@ -459,6 +466,7 @@ button {
 .profile-github .repo {
   display: flex;
   border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .profile-github .repo > div:first-child {
@@ -479,9 +487,13 @@ button {
 
 .post {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr;
   grid-gap: 2rem;
   align-items: center;
+  border-radius: 10px;
+  box-shadow: 4px 3px 2px 2px rgba(0, 0, 0, 0.2);
+  width: 60vw;
+  margin: 2rem auto;
 }
 
 .post > div:first-child {
@@ -490,6 +502,20 @@ button {
 
 .post img {
   width: 100px;
+}
+
+.post .post-img {
+  width: 100%;
+  height: 60%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.post .user-img-post {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .post .comment-count {
@@ -504,6 +530,15 @@ button {
   color: #aaa;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
+}
+.post .community {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.post .user-post {
+  display: flex;
+  justify-content: flex-start;
 }
 
 /* Mobile Styles */
@@ -562,7 +597,7 @@ button {
 
   .profile-top img,
   .profile img {
-    width: 200px;
+    width: 100px;
     margin: auto;
   }
 

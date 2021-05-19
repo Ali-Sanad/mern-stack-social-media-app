@@ -3,20 +3,37 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {logout} from '../../actions/auth';
-const Navbar = ({logout, isAuthenticated, loading}) => {
+const Navbar = ({logout, auth, isAuthenticated, loading, profile}) => {
   const authLinks = (
     <ul>
       <li>
         <Link to='/profiles'>People</Link>
       </li>
+
+      <li>
+        <Link to='/posts'>Posts</Link>
+      </li>
+
+      {isAuthenticated && (
+        <li>
+          <Link
+            to={profile === null ? `/dashboard` : `/profile/${auth.user._id} }`}
+          >
+            <i className='fas fa-user'></i>{' '}
+            <span className='hide-sm'>Profile</span>
+          </Link>
+        </li>
+      )}
+
       <li>
         <Link to='/dashboard'>
           <i className='fas fa-user-edit'></i>{' '}
           <span className='hide-sm'>Dashboard</span>
         </Link>
       </li>
+
       <li>
-        <Link to='#!' onClick={logout}>
+        <Link to='/' onClick={logout}>
           <i className='fas fa-sign-out-alt'></i>{' '}
           <span className='hide-sm'>Log out</span>
         </Link>
@@ -28,6 +45,9 @@ const Navbar = ({logout, isAuthenticated, loading}) => {
     <ul>
       <li>
         <Link to='/profiles'>People</Link>
+      </li>
+      <li>
+        <Link to='/posts'>Posts</Link>
       </li>
       <li>
         <Link to='/register'>Register</Link>
@@ -54,12 +74,16 @@ Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
+  profile: PropTypes.object,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     loading: state.auth.loading,
+    profile: state.profile.profile,
+    auth: state.auth,
   };
 };
 
