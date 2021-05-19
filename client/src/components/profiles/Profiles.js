@@ -18,7 +18,7 @@ const Profiles = ({getProfiles, profile: {profiles, loading}}) => {
         </>
       ) : (
         <>
-          <div style={{marginLeft: '18%'}}>
+          <div style={{marginLeft: '10%'}}>
             <h1 className='large text-primary'>People</h1>
             <p className='lead'>
               <i className='fas fa-link p-1'></i>Discover and connect with

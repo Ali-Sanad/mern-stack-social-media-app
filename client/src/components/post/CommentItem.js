@@ -16,9 +16,10 @@ const CommentItem = ({
       className='post bg-white p-1 my-1'
       style={{
         display: 'flex',
-        justifyItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        // justifyContent: 'space-between',
+        // flexWrap: 'wrap',
       }}
     >
       <div className='user-post'>
@@ -27,8 +28,11 @@ const CommentItem = ({
           <h4>{name}</h4>
         </Link>
       </div>
-      <div style={{margin: 'auto', textAlign: 'start', whiteSpace: 'pre-wrap'}}>
-        <p>{text}</p>
+      <div /* style={{margin: 'auto', textAlign: 'start', whiteSpace: 'pre-wrap'}} */
+      >
+        <p className='my-1' style={{textAlign: 'left'}}>
+          {text}
+        </p>
         <p className='post-date'>
           Posted on <Moment format='DD-MM-YYYY  hh:mm:ss'>{date}</Moment>
         </p>

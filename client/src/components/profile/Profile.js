@@ -25,7 +25,7 @@ const Profile = ({
         <Spinner />
       ) : (
         <>
-          <div style={{marginLeft: '12%', marginBottom: '2rem'}}>
+          <div style={{marginLeft: '4%', marginBottom: '2rem'}}>
             <Link to='/profiles' className='btn btn-light'>
               Back To People
             </Link>

@@ -15,7 +15,7 @@ const Posts = ({getPosts, auth: {isAuthenticated}, post: {posts, loading}}) => {
     <Spinner />
   ) : (
     <>
-      <div style={{marginLeft: '18%'}}>
+      <div style={{marginLeft: '10%'}}>
         <h1 className='large text-primary'>Posts</h1>
         <p className='lead'>
           <i className='fas fa-blog'></i> Welcome to the community
