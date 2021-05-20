@@ -41,6 +41,7 @@ const PostItem = ({
           <p className='my-1'>{text}</p>
           {image !== null && (
             <img // image for post
+              style={{height: '50vh', objectFit: 'cover'}}
               className='post-img'
               src={`http://localhost:5000/image/post/${image}`}
               alt=''

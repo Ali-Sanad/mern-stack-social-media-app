@@ -33,15 +33,15 @@ const reducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        ...payload,
         isAuthenticated: true,
         loading: false,
       };
     case REGISTER_FAIL:
-    case AUTH_ERROR:
     case LOGIN_FAIL:
+    case AUTH_ERROR:
     case LOGOUT:
     case ACCOUNT_DELETED:
-      localStorage.removeItem('token');
       return {
         ...state,
         token: null,

@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {userImageUpload} from '../../actions/auth';
-import {getCurrentProfile} from '../../actions/profile';
 import {connect} from 'react-redux';
 
 const ProfileTop = ({
@@ -14,7 +13,6 @@ const ProfileTop = ({
     user: {_id, name, avatar},
   },
   userImageUpload,
-  getCurrentProfile,
   auth,
 }) => {
   const [image, setImage] = useState(null);
@@ -29,7 +27,6 @@ const ProfileTop = ({
       fd.append('avatar', image, image.name);
     }
     userImageUpload(fd);
-    console.log(fd);
     setImage(null);
   };
   return (
@@ -131,7 +128,6 @@ ProfileTop.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   userImageUpload: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -140,6 +136,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {userImageUpload, getCurrentProfile})(
-  ProfileTop
-);
+export default connect(mapStateToProps, {
+  userImageUpload,
+})(ProfileTop);

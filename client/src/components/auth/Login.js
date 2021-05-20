@@ -4,7 +4,7 @@ import {Link, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {login} from '../../actions/auth';
 
-const Login = ({checkUser, login, isAuthenticated}) => {
+const Login = ({login, isAuthenticated}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',

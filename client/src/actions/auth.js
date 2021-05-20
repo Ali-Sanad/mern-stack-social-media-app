@@ -1,5 +1,6 @@
-import axios from 'axios';
+import api from '../utils/api';
 import {setAlert} from './alert';
+import {getCurrentProfile} from './profile';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -8,21 +9,14 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_PROFILE,
   PROFILE_ERROR,
   USER_IMAGE,
 } from './types';
 
-import setAuthToken from '../utils/setAuthToken';
-
-//check user
-export const checkUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
+//load user
+export const loadUser = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/auth');
-    // console.log(res.data);
+    const res = await api.get('/auth');
 
     dispatch({
       type: USER_LOADED,
@@ -38,13 +32,13 @@ export const checkUser = () => async (dispatch) => {
 //register user
 export const register = (formData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/users', formData);
-    localStorage.setItem('token', res.data.token);
+    const res = await api.post('/users', formData);
 
     dispatch({
       type: REGISTER_SUCCESS,
+      payload: res.data,
     });
-    dispatch(checkUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -60,13 +54,13 @@ export const register = (formData) => async (dispatch) => {
 //login user
 export const login = (formData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/auth', formData);
-    localStorage.setItem('token', res.data.token);
+    const res = await api.post('/auth', formData);
 
     dispatch({
       type: LOGIN_SUCCESS,
+      payload: res.data,
     });
-    dispatch(checkUser());
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -82,9 +76,6 @@ export const login = (formData) => async (dispatch) => {
 //logout
 export const logout = () => (dispatch) => {
   dispatch({
-    type: CLEAR_PROFILE,
-  });
-  dispatch({
     type: LOGOUT,
   });
 };
@@ -92,13 +83,15 @@ export const logout = () => (dispatch) => {
 //update user info   //post => api/users/image
 export const userImageUpload = (formData) => async (dispatch) => {
   try {
-    const res = await axios.post(`/api/users/image`, formData);
+    const res = await api.post(`/users/image`, formData);
 
     dispatch({
       type: USER_IMAGE,
       payload: res.data,
     });
     dispatch(setAlert('Image Uploaded', 'success'));
+    dispatch(loadUser());
+    dispatch(getCurrentProfile());
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
