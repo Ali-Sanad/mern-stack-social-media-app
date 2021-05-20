@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-
+import {serverBaseURI} from '../../utils/serverBaseURI';
 const ProfileSection = ({
   profile: {
     user: {_id, name, avatar},
@@ -17,7 +17,7 @@ const ProfileSection = ({
         src={
           avatar === '' || !avatar
             ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-            : `http://localhost:5000/image/user/${avatar}`
+            : `${serverBaseURI}/image/user/${avatar}`
         }
         alt=''
         className='round-img'

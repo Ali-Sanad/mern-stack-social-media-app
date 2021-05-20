@@ -1,0 +1,5 @@
+{
+  "mongoURI": "mongodb+srv://ali123:ali123@social-media-app.xoeqt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubToken": "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"
+}

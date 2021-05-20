@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom';
 import {addLike, removeLike, deletPost} from '../../actions/post';
+import {serverBaseURI} from '../../utils/serverBaseURI';
 
 const PostItem = ({
   auth,
@@ -28,7 +29,7 @@ const PostItem = ({
                 src={
                   avatar === '' || !avatar
                     ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-                    : `http://localhost:5000/image/user/${avatar}`
+                    : `${serverBaseURI}/image/user/${avatar}`
                 }
                 alt=''
               />
@@ -43,7 +44,7 @@ const PostItem = ({
             <img // image for post
               style={{height: '50vh', objectFit: 'cover'}}
               className='post-img'
-              src={`http://localhost:5000/image/post/${image}`}
+              src={`${serverBaseURI}/image/post/${image}`}
               alt=''
             />
           )}
@@ -84,10 +85,6 @@ const PostItem = ({
                   <span className='comment-count'>{comments.length}</span>
                 )}
               </Link>
-
-              {/* <Link to={`/posts/${_id}`} className='btn btn-primary'>
-              Display
-            </Link> */}
 
               {auth.user && !auth.loading && auth.isAuthenticated && (
                 <>

@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {userImageUpload} from '../../actions/auth';
 import {connect} from 'react-redux';
-
+import {serverBaseURI} from '../../utils/serverBaseURI';
 const ProfileTop = ({
   profile: {
     status,
@@ -40,7 +40,7 @@ const ProfileTop = ({
           src={
             avatar === '' || !avatar
               ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-              : `http://localhost:5000/image/user/${avatar}`
+              : `${serverBaseURI}/image/user/${avatar}`
           }
           alt=''
           style={{

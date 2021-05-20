@@ -4,6 +4,7 @@ import {deleteComment} from '../../actions/post';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
+import {serverBaseURI} from '../../utils/serverBaseURI';
 
 const CommentItem = ({
   deleteComment,
@@ -28,15 +29,14 @@ const CommentItem = ({
             src={
               avatar === '' || !avatar
                 ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-                : `http://localhost:5000/image/user/${avatar}`
+                : `${serverBaseURI}/image/user/${avatar}`
             }
             alt=''
           />
           <h4>{name}</h4>
         </Link>
       </div>
-      <div /* style={{margin: 'auto', textAlign: 'start', whiteSpace: 'pre-wrap'}} */
-      >
+      <div>
         <p className='my-1' style={{textAlign: 'left'}}>
           {text}
         </p>
