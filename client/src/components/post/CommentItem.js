@@ -16,10 +16,9 @@ const CommentItem = ({
       className='post bg-white p-1 my-1'
       style={{
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        // justifyContent: 'space-between',
-        // flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
       }}
     >
       <div className='user-post'>

@@ -4,7 +4,7 @@ import {Link, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {login} from '../../actions/auth';
 
-const Login = ({login, isAuthenticated}) => {
+const Login = ({checkUser, login, isAuthenticated}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,7 +27,7 @@ const Login = ({login, isAuthenticated}) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/' />;
+    return <Redirect to='posts' />;
   }
   return (
     <div

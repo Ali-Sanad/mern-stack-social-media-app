@@ -31,10 +31,8 @@ const reducer = (state = initialState, action) => {
 
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
         isAuthenticated: true,
         loading: false,
       };
@@ -48,7 +46,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
+        loading: true,
         user: null,
       };
     case USER_IMAGE:

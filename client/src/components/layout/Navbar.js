@@ -14,7 +14,7 @@ const Navbar = ({logout, auth: {isAuthenticated, loading, user}}) => {
         <Link to='/posts'>Posts</Link>
       </li>
 
-      {!loading && isAuthenticated && (
+      {user && !loading && isAuthenticated && (
         <li>
           <Link to={`/profile/${user._id}`}>
             <i className='fas fa-user'></i>{' '}
@@ -63,7 +63,7 @@ const Navbar = ({logout, auth: {isAuthenticated, loading, user}}) => {
           <i className='fas fa-blog'></i> Social Network
         </Link>
       </h1>
-      <>{!loading && isAuthenticated ? authLinks : guestLinks}</>
+      <>{user && !loading && isAuthenticated ? authLinks : guestLinks}</>
     </nav>
   );
 };

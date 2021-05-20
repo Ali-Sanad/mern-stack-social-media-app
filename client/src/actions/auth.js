@@ -22,6 +22,7 @@ export const checkUser = () => async (dispatch) => {
   }
   try {
     const res = await axios.get('/api/auth');
+    // console.log(res.data);
 
     dispatch({
       type: USER_LOADED,
@@ -38,10 +39,10 @@ export const checkUser = () => async (dispatch) => {
 export const register = (formData) => async (dispatch) => {
   try {
     const res = await axios.post('/api/users', formData);
+    localStorage.setItem('token', res.data.token);
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data,
     });
     dispatch(checkUser());
   } catch (err) {
@@ -60,12 +61,11 @@ export const register = (formData) => async (dispatch) => {
 export const login = (formData) => async (dispatch) => {
   try {
     const res = await axios.post('/api/auth', formData);
+    localStorage.setItem('token', res.data.token);
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,
     });
-
     dispatch(checkUser());
   } catch (err) {
     const errors = err.response.data.errors;

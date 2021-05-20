@@ -56,6 +56,7 @@ const PostItem = ({
                 type='button'
                 className='btn btn-light'
                 onClick={() =>
+                  auth.user &&
                   auth.isAuthenticated &&
                   (likes.filter((like) => like.user === auth.user._id).length >
                   0
@@ -65,6 +66,7 @@ const PostItem = ({
               >
                 <i
                   className={`fas fa-thumbs-up ${
+                    auth.user &&
                     auth.isAuthenticated &&
                     (likes.filter((like) => like.user === auth.user._id)
                       .length > 0
@@ -86,7 +88,7 @@ const PostItem = ({
               Display
             </Link> */}
 
-              {auth.isAuthenticated && (
+              {auth.user && !auth.loading && auth.isAuthenticated && (
                 <>
                   {user === auth.user._id && (
                     <button
