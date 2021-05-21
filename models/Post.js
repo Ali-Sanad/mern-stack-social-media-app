@@ -13,13 +13,13 @@ const PostSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
+    post_image_url: {
       type: String,
     },
     name: {
       type: String,
     },
-    avatar: {
+    user_image_url: {
       type: String,
     },
     likes: [
@@ -43,10 +43,7 @@ const PostSchema = mongoose.Schema(
         name: {
           type: String,
         },
-        avatar: {
-          type: String,
-        },
-        image: {
+        user_image_url: {
           type: String,
         },
         date: {

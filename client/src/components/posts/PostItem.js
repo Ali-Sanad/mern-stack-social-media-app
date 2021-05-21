@@ -4,11 +4,20 @@ import {connect} from 'react-redux';
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom';
 import {addLike, removeLike, deletPost} from '../../actions/post';
-import {serverBaseURI} from '../../utils/serverBaseURI';
 
 const PostItem = ({
   auth,
-  post: {_id, text, user, name, avatar, image, likes, comments, date},
+  post: {
+    _id,
+    text,
+    user,
+    name,
+    user_image_url,
+    post_image_url,
+    likes,
+    comments,
+    date,
+  },
   addLike,
   removeLike,
   deletPost,
@@ -25,11 +34,10 @@ const PostItem = ({
             >
               <img
                 className='user-img-post'
-                //  src={avatar} user image
                 src={
-                  avatar === '' || !avatar
+                  user_image_url === '' || !user_image_url
                     ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-                    : `${serverBaseURI}/image/user/${avatar}`
+                    : user_image_url
                 }
                 alt=''
               />
@@ -40,11 +48,13 @@ const PostItem = ({
           </div>
 
           <p className='my-1'>{text}</p>
-          {image !== null && (
-            <img // image for post
+          {post_image_url === '' || !post_image_url ? (
+            <p></p>
+          ) : (
+            <img // post_image_url for post
               style={{height: '50vh', objectFit: 'cover'}}
               className='post-img'
-              src={`${serverBaseURI}/image/post/${image}`}
+              src={post_image_url}
               alt=''
             />
           )}

@@ -3,38 +3,14 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 const auth = require('../../middlewares/auth');
 const User = require('../../models/User');
-const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
-
-//multer********************************************************************
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/image/post');
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${new Date().getTime()}_${file.originalname.replace(
-      /\s+/g,
-      '-'
-    )}`;
-    cb(null, fileName);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 50,
-  },
-});
-/////////////////////////////////////////////////////////////////////////
+const {cloudinary} = require('../../utils/cloudinary');
 
 //@ route          POST api/posts
 //@descrption      Create post
 //@access          Private
 router.post(
   '/',
-  upload.single('image'),
   [auth, [check('text', 'Text is required').notEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -45,19 +21,25 @@ router.post(
     try {
       const user = await User.findById(req.user.id).select('-password');
 
-      let postImage = null;
-      if (!req.file) {
-        postImage = null;
+      let url = '';
+      if (!req.body.data) {
+        url = '';
       } else {
-        postImage = req.file.filename;
+        //cloudinary image upload
+        const fileStr = req.body.data;
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+          upload_preset: 'social_network',
+        });
+
+        url = uploadedResponse.secure_url;
       }
 
       const newPost = new Post({
         text: req.body.text,
+        post_image_url: url,
         name: user.name,
-        avatar: user.avatar,
+        user_image_url: user.user_image_url,
         user: req.user.id,
-        image: postImage,
       });
 
       const post = await newPost.save();
@@ -219,7 +201,7 @@ router.post(
       const newComment = {
         text: req.body.text,
         name: user.name,
-        avatar: user.avatar,
+        user_image_url: user.user_image_url,
         user: req.user.id,
       };
 

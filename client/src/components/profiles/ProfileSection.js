@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {serverBaseURI} from '../../utils/serverBaseURI';
 const ProfileSection = ({
   profile: {
-    user: {_id, name, avatar},
+    user: {_id, name, user_image_url},
     status,
     company,
     location,
@@ -15,9 +14,9 @@ const ProfileSection = ({
     <div className='profile bg-light'>
       <img
         src={
-          avatar === '' || !avatar
+          user_image_url === '' || !user_image_url
             ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-            : `${serverBaseURI}/image/user/${avatar}`
+            : user_image_url
         }
         alt=''
         className='round-img'

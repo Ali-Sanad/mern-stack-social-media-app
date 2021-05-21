@@ -17,15 +17,25 @@ const PostForm = ({addPost}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    if (image !== null) {
-      fd.append('image', image, image.name);
-    }
-    fd.append('text', text);
 
-    addPost(fd);
-    setImage(null);
-    setText('');
+    if (!image) {
+      addPost({text});
+      setText('');
+      setImage(null);
+    } else {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onloadend = () => {
+        addPost({data: reader.result, text: text});
+        console.log({data: reader.result, text: text});
+      };
+      reader.onerror = () => {
+        console.error('Image upload failed');
+      };
+
+      setText('');
+      setImage(null);
+    }
   };
 
   const fileInput = useRef(null);

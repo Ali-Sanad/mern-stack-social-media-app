@@ -17,7 +17,7 @@ router.get('/me', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({user: req.user.id}).populate(
       'user',
-      ['name', 'avatar']
+      ['name', 'user_image_url']
     );
 
     if (!profile) {
@@ -105,7 +105,7 @@ router.get('/', async (req, res) => {
   try {
     const profiles = await Profile.find({}).populate('user', [
       'name',
-      'avatar',
+      'user_image_url',
     ]);
     res.json(profiles);
   } catch (err) {
@@ -121,7 +121,7 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id,
-    }).populate('user', ['name', 'avatar']);
+    }).populate('user', ['name', 'user_image_url']);
 
     if (!profile) return res.status(400).json({msg: 'Profile not found'});
     res.json(profile);

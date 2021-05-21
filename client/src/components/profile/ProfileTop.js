@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {userImageUpload} from '../../actions/auth';
 import {connect} from 'react-redux';
-import {serverBaseURI} from '../../utils/serverBaseURI';
 const ProfileTop = ({
   profile: {
     status,
@@ -10,7 +9,7 @@ const ProfileTop = ({
     location,
     website,
     social: {facebook, twitter, instagram, youtube, linkedin},
-    user: {_id, name, avatar},
+    user: {_id, name, user_image_url},
   },
   userImageUpload,
   auth,
@@ -22,12 +21,18 @@ const ProfileTop = ({
   const fileInput = useRef(null);
 
   const upload = () => {
-    const fd = new FormData();
-    if (image !== null) {
-      fd.append('avatar', image, image.name);
-    }
-    userImageUpload(fd);
-    setImage(null);
+    if (!image) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = () => {
+      userImageUpload({data: reader.result});
+      console.log(reader.result);
+      setImage(null);
+    };
+
+    reader.onerror = () => {
+      console.error('Image upload failed');
+    };
   };
   return (
     <>
@@ -38,9 +43,9 @@ const ProfileTop = ({
         <img
           className='round-img '
           src={
-            avatar === '' || !avatar
+            user_image_url === '' || !user_image_url
               ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-              : `${serverBaseURI}/image/user/${avatar}`
+              : user_image_url
           }
           alt=''
           style={{

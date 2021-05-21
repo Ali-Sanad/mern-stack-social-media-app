@@ -93,12 +93,7 @@ export const deletPost = (id) => async (dispatch) => {
 export const addPost = (formData) => async (dispatch) => {
   try {
     //axios set headers automatically
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data',
-    //   },
-    // };
-    const res = await api.post(`/posts`, formData /* config */);
+    const res = await api.post(`/posts`, formData);
 
     dispatch({
       type: ADD_POST,

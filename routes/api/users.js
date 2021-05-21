@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -8,29 +7,7 @@ const {check, validationResult} = require('express-validator');
 
 const User = require('../../models/User');
 const auth = require('../../middlewares/auth');
-
-//multer********************************************************************
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/image/user');
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${new Date().getTime()}_${file.originalname.replace(
-      /\s+/g,
-      '-'
-    )}`;
-    cb(null, fileName);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 50,
-  },
-});
-/////////////////////////////////////////////////////////////////////////
+const {cloudinary} = require('../../utils/cloudinary');
 
 //@ route          POST   api/users
 //@descrption      Register user
@@ -59,18 +36,10 @@ router.post(
         return res.status(400).json({errors: [{msg: 'User  already exists'}]});
       }
 
-      //get user gravatar
-      // const avatar = gravatar.url(email, {
-      //   s: '200',
-      //   r: 'pg',
-      //   d: 'mm',
-      // });
-
       user = new User({
         name,
         email,
         password,
-        // avatar,
       });
 
       //encrypt password
@@ -101,18 +70,24 @@ router.post(
   }
 );
 
-router.post('/image/', upload.single('avatar'), auth, async (req, res) => {
-  let userImage = null;
-  if (!req.file) {
-    userImage = null;
+router.post('/image', auth, async (req, res) => {
+  const fileStr = req.body.data;
+  const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+    upload_preset: 'social_network',
+  });
+  // console.log(uploadedResponse);
+
+  let url = '';
+  if (!req.body.data) {
+    url = '';
   } else {
-    userImage = req.file.filename;
+    url = uploadedResponse.secure_url;
   }
 
   try {
     const user = await User.findOneAndUpdate(
       {_id: req.user.id},
-      {avatar: userImage},
+      {user_image_url: url},
       {new: true}
     );
 

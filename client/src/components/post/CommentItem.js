@@ -4,12 +4,11 @@ import {deleteComment} from '../../actions/post';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
-import {serverBaseURI} from '../../utils/serverBaseURI';
 
 const CommentItem = ({
   deleteComment,
   postId,
-  comment: {_id, text, name, avatar, user, date},
+  comment: {_id, text, name, user_image_url, user, date},
   auth,
 }) => {
   return (
@@ -27,9 +26,9 @@ const CommentItem = ({
           <img
             className='user-img-post'
             src={
-              avatar === '' || !avatar
+              user_image_url === '' || !user_image_url
                 ? 'https://img.icons8.com/bubbles/2x/fa314a/user-male.png'
-                : `${serverBaseURI}/image/user/${avatar}`
+                : user_image_url
             }
             alt=''
           />
