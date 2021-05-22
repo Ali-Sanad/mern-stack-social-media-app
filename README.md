@@ -1,2 +1,2 @@
-# mern-stack-social-media-app
-MERN Stack Application
+#MERN Stack Application
+#https://social-media-mern-app-007.herokuapp.com/
