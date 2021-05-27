@@ -21,6 +21,7 @@ const ProfileTop = ({
   const fileInput = useRef(null);
 
   const upload = () => {
+    fileInput.current.click();
     if (!image) return;
     const reader = new FileReader();
     reader.readAsDataURL(image);
@@ -52,14 +53,34 @@ const ProfileTop = ({
             height: '150px',
             width: '150px',
             objectFit: 'cover',
-            cursor: 'pointer',
           }}
-          onClick={() =>
-            auth.isAuthenticated &&
-            auth.user._id === _id &&
-            fileInput.current.click()
-          }
         />
+
+        {auth.isAuthenticated && auth.user._id === _id && (
+          <div
+            style={{
+              background: 'white',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+            }}
+          >
+            <i
+              className='fas fa-camera fa-2x'
+              onClick={() => {
+                auth.isAuthenticated &&
+                  auth.user._id === _id &&
+                  // fileInput.current.click();
+                  upload();
+              }}
+              style={{
+                cursor: 'pointer',
+                color: 'black',
+                marginTop: '0.5rem',
+              }}
+            />
+          </div>
+        )}
 
         <input
           type='file'
@@ -70,7 +91,7 @@ const ProfileTop = ({
           ref={fileInput}
         />
 
-        {auth.isAuthenticated && auth.user._id === _id && (
+        {/* {auth.isAuthenticated && auth.user._id === _id && (
           <button
             className='btn btn-light'
             onClick={() => upload()}
@@ -78,7 +99,7 @@ const ProfileTop = ({
           >
             upload <i className='fas fa-upload text-dark'></i>
           </button>
-        )}
+        )} */}
 
         <h1 className='large'>{name}</h1>
         <p className='lead'>
