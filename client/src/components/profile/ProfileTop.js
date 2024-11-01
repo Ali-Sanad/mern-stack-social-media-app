@@ -1,44 +1,47 @@
-import React, {useRef, useState} from 'react';
-import PropTypes from 'prop-types';
-import {userImageUpload} from '../../actions/auth';
-import {connect} from 'react-redux';
+import React, { useRef, useState } from 'react'
+import PropTypes from 'prop-types'
+import { userImageUpload } from '../../actions/auth'
+import { connect } from 'react-redux'
 const ProfileTop = ({
   profile: {
     status,
     company,
     location,
     website,
-    social: {facebook, twitter, instagram, youtube, linkedin},
-    user: {_id, name, user_image_url},
+    social: { facebook, twitter, instagram, youtube, linkedin },
+    user: { _id, name, user_image_url }
   },
   userImageUpload,
-  auth,
+  auth
 }) => {
-  const [image, setImage] = useState(null);
-  const onImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
-  const fileInput = useRef(null);
+  const [image, setImage] = useState(null)
+  const onImageChange = e => {
+    setImage(e.target.files[0])
+  }
+  const fileInput = useRef(null)
 
   const upload = () => {
-    if (!image) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
+    if (!image) return
+    const reader = new FileReader()
+    reader.readAsDataURL(image)
     reader.onloadend = () => {
-      userImageUpload({data: reader.result});
-      console.log(reader.result);
-      setImage(null);
-    };
+      userImageUpload({ data: reader.result })
+      setImage(null)
+    }
 
     reader.onerror = () => {
-      console.error('Image upload failed');
-    };
-  };
+      console.error('Image upload failed')
+    }
+  }
   return (
     <>
       <div
         className='profile-top p-2 bg-primary'
-        style={{borderRadius: '10px', height: '70vh', position: 'relative'}}
+        style={{
+          borderRadius: '10px',
+          height: '70vh',
+          position: 'relative'
+        }}
       >
         <img
           className='round-img '
@@ -52,7 +55,7 @@ const ProfileTop = ({
             height: '150px',
             width: '150px',
             objectFit: 'cover',
-            cursor: 'pointer',
+            cursor: 'pointer'
           }}
           onClick={() =>
             auth.isAuthenticated &&
@@ -65,8 +68,8 @@ const ProfileTop = ({
           type='file'
           name='avatar'
           accept='image/png, image/jpeg, image/jpg'
-          onChange={(e) => onImageChange(e)}
-          style={{display: 'none'}}
+          onChange={e => onImageChange(e)}
+          style={{ display: 'none' }}
           ref={fileInput}
         />
 
@@ -74,7 +77,7 @@ const ProfileTop = ({
           <button
             className='btn btn-light'
             onClick={() => upload()}
-            style={{position: 'absolute', top: '10px', right: '10px'}}
+            style={{ position: 'absolute', top: '10px', right: '10px' }}
           >
             upload <i className='fas fa-upload text-dark'></i>
           </button>
@@ -126,21 +129,21 @@ const ProfileTop = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 ProfileTop.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  userImageUpload: PropTypes.func.isRequired,
-};
+  userImageUpload: PropTypes.func.isRequired
+}
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth,
-  };
-};
+    auth: state.auth
+  }
+}
 
 export default connect(mapStateToProps, {
-  userImageUpload,
-})(ProfileTop);
+  userImageUpload
+})(ProfileTop)
