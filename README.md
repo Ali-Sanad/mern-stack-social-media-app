@@ -2,4 +2,4 @@
 
 ### Built with React, Redux, Node, Express and MongoDB
 
-#### [Live App :rocket:](https://social-network-app.glitch.me/)
+#### [Live App :rocket:](https://mern-social-network-app.glitch.me/)
