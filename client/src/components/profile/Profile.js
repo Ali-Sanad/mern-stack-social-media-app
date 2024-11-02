@@ -1,31 +1,31 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import Spinner from '../layout/Spinner';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {getProfileById} from '../../actions/profile';
-import ProfileTop from './ProfileTop';
-import ProfileAbout from './ProfileAbout';
-import ProfileExperience from './ProfileExperience';
-import ProfileEducation from './ProfileEducation';
-import ProfileGithub from './ProfileGithub';
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import Spinner from '../layout/Spinner'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getProfileById } from '../../actions/profile'
+import ProfileTop from './ProfileTop'
+import ProfileAbout from './ProfileAbout'
+import ProfileExperience from './ProfileExperience'
+import ProfileEducation from './ProfileEducation'
+import ProfileGithub from './ProfileGithub'
 
 const Profile = ({
   getProfileById,
   match,
   auth,
-  profile: {profile, loading},
+  profile: { profile, loading }
 }) => {
   useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id]);
+    getProfileById(match.params.id)
+  }, [getProfileById, match.params.id])
   return (
     <>
       {profile === null || loading ? (
         <Spinner />
       ) : (
         <>
-          <div style={{marginLeft: '4%', marginBottom: '2rem'}}>
+          <div style={{ marginBottom: '2rem' }}>
             <Link to='/profiles' className='btn btn-light'>
               Back To People
             </Link>
@@ -37,10 +37,7 @@ const Profile = ({
                 </Link>
               )}
           </div>
-          <div
-            className='profile-grid my-2'
-            style={{width: '70vw', margin: 'auto'}}
-          >
+          <div className='profile-grid my-2'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
 
@@ -48,7 +45,7 @@ const Profile = ({
               <h2 className='text-primary'>Experience</h2>
               {profile.experience.length > 0 ? (
                 <>
-                  {profile.experience.map((exp) => (
+                  {profile.experience.map(exp => (
                     <ProfileExperience key={exp._id} experience={exp} />
                   ))}
                 </>
@@ -61,7 +58,7 @@ const Profile = ({
               <h2 className='text-primary'>Education</h2>
               {profile.education.length > 0 ? (
                 <>
-                  {profile.education.map((edu) => (
+                  {profile.education.map(edu => (
                     <ProfileEducation key={edu._id} education={edu} />
                   ))}
                 </>
@@ -76,19 +73,19 @@ const Profile = ({
         </>
       )}
     </>
-  );
-};
+  )
+}
 
 Profile.propTypes = {
   getProfileById: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-};
-const mapStateToProps = (state) => {
+  auth: PropTypes.object.isRequired
+}
+const mapStateToProps = state => {
   return {
     profile: state.profile,
-    auth: state.auth,
-  };
-};
+    auth: state.auth
+  }
+}
 
-export default connect(mapStateToProps, {getProfileById})(Profile);
+export default connect(mapStateToProps, { getProfileById })(Profile)

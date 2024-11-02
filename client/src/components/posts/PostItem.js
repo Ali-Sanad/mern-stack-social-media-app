@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Moment from 'react-moment';
-import {Link} from 'react-router-dom';
-import {addLike, removeLike, deletPost} from '../../actions/post';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Moment from 'react-moment'
+import { Link } from 'react-router-dom'
+import { addLike, removeLike, deletPost } from '../../actions/post'
 
 const PostItem = ({
   auth,
@@ -16,12 +16,12 @@ const PostItem = ({
     post_image_url,
     likes,
     comments,
-    date,
+    date
   },
   addLike,
   removeLike,
   deletPost,
-  showActions,
+  showActions
 }) => {
   return (
     <>
@@ -30,7 +30,7 @@ const PostItem = ({
           <div className='user-post'>
             <Link
               to={`/profile/${user}`}
-              style={{display: 'flex', alignItems: 'center'}}
+              style={{ display: 'flex', alignItems: 'center' }}
             >
               <img
                 className='user-img-post'
@@ -41,7 +41,7 @@ const PostItem = ({
                 }
                 alt=''
               />
-              <h4 style={{display: 'inline-block', margin: '0 1rem'}}>
+              <h4 style={{ display: 'inline-block', margin: '0 1rem' }}>
                 {name}
               </h4>
             </Link>
@@ -52,7 +52,7 @@ const PostItem = ({
             <p></p>
           ) : (
             <img // post_image_url for post
-              style={{height: '50vh', objectFit: 'cover'}}
+              style={{ height: '50vh', objectFit: 'cover' }}
               className='post-img'
               src={post_image_url}
               alt=''
@@ -70,8 +70,8 @@ const PostItem = ({
                 onClick={() =>
                   auth.user &&
                   auth.isAuthenticated &&
-                  (likes.filter((like) => like.user === auth.user._id).length >
-                  0
+                  (likes.filter(like => like.user === auth.user._id)
+                    .length > 0
                     ? removeLike(_id)
                     : addLike(_id))
                 }
@@ -80,7 +80,7 @@ const PostItem = ({
                   className={`fas fa-thumbs-up ${
                     auth.user &&
                     auth.isAuthenticated &&
-                    (likes.filter((like) => like.user === auth.user._id)
+                    (likes.filter(like => like.user === auth.user._id)
                       .length > 0
                       ? 'text-primary'
                       : 'text-light')
@@ -114,26 +114,28 @@ const PostItem = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 PostItem.defaultProps = {
-  showActions: true,
-};
+  showActions: true
+}
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
-  deletPost: PropTypes.func.isRequired,
-};
-const mapStateToProps = (state) => {
+  deletPost: PropTypes.func.isRequired
+}
+const mapStateToProps = state => {
   return {
-    auth: state.auth,
-  };
-};
+    auth: state.auth
+  }
+}
 
-export default connect(mapStateToProps, {addLike, removeLike, deletPost})(
-  PostItem
-);
+export default connect(mapStateToProps, {
+  addLike,
+  removeLike,
+  deletPost
+})(PostItem)

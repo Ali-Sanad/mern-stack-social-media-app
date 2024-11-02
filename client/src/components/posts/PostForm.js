@@ -51,7 +51,7 @@ const PostForm = ({ setAlert, addPost }) => {
   const fileInput = useRef(null)
 
   return (
-    <div className='post-form' style={{ width: '60vw', margin: 'auto' }}>
+    <div className='post-form'>
       <div className='bg-primary p' style={{ borderRadius: '5px' }}>
         <h3>Create post</h3>
       </div>
